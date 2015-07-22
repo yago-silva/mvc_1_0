@@ -19,7 +19,7 @@ public class ControladorProduto {
 	
 	@GET
 	@Path("inicio")
-	public Integer inicio() {
-		return 1;
+	public String inicio() {
+		return "inicio.jsp";
 	}
 }
