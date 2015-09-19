@@ -1,7 +1,5 @@
 package br.com.devmedia.mvc.produto;
 
-import java.math.BigDecimal;
-
 import javax.inject.Inject;
 import javax.mvc.Controller;
 import javax.mvc.Models;
@@ -43,30 +41,30 @@ public class ControladorProduto {
 	@PUT
 	@ValidateOnExecution(type = ExecutableType.NONE)
 	public Response altera(@BeanParam @Valid Produto produto) {
+		if(result.isFailed()){
+			//Lógica para adicionar mensagens de erro a página
+			return Response.status(Status.BAD_REQUEST).entity("produto/erro.jsp").build();
+		}
 		//Lógica para alterar o produto
 		return Response.ok("produto/lista.jsp").build();
 	}
 	
 	@DELETE
 	@Path("{id}")
-	public String remove(@PathParam("id") int id) {
+	public Response remove(@PathParam("id") int id) {
+		if(result.isFailed()){
+			//Lógica para adicionar mensagens de erro a página
+			return Response.status(Status.BAD_REQUEST).entity("produto/erro.jsp").build();
+		}
 		//Lógica para remover o produto
-		return "produto/lista.jsp";
-	}
-	
-	@GET
-	@Path("bla")
-	public Integer bla() {
-		return 1;
+		return Response.ok("produto/lista.jsp").build();
 	}
 	
 	@GET
 	@Path("{id}")
 	public String exibe(@PathParam("id") int id){
-		Produto produto = new Produto();
-		produto.setId(id);
-		produto.setNome("produto_teste");
-		produto.setPreco(new BigDecimal("50"));
+		Produto produto = null;
+		//lógica para recuperar o produto da base de dados
 		models.put("produto", produto);
 		return "produto/exibe.jsp";
 	}
